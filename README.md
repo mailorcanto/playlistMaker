@@ -6,7 +6,7 @@ O **Playlist Maker** é uma aplicação web que permite criar, gerenciar e compa
 - **Autenticação de Usuário**: Login, Cadastro, Recuperação de Senha.
 - **Gerenciamento de Playlists**: Criação, Edição, Exclusão de playlists e músicas.
 - **Upload de Arquivos**: Envio de imagens e prévias de músicas.
-- **Exportação de Playlists**: Exportação de playlists em formato .txt.
+- **Exportação de Playlists**: Exportação de playlists em formato .txt (salvas em back-apiplaylist/playlists).
 
 ## Requisitos
 - **node.js**
