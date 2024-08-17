@@ -18,7 +18,7 @@ O **Playlist Maker** é uma aplicação web que permite criar, gerenciar e compa
 1. **Acesse a pasta back-apiplaylist e instale as dependências**:
 npm install
 
-2. **Configure .env conforme exemplo**:
+2. **Crie e configure .env conforme exemplo**:
 
 PORT=3001
 
