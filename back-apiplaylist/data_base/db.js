@@ -3,7 +3,8 @@ const dotenv = require('dotenv'); // Importa odotenv para carregar variáveis de
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
-// Cria uma nova instância do Sequelize com a string de conexão do banco de dados
-const sequelize = new Sequelize(process.env.CONNECTION_STRING);
+const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
+  logging: false, // Desativa o logging das queries SQL no console
+});
 
 module.exports = sequelize; // Exporta a instância do Sequelize para uso em outros módulos
