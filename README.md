@@ -1,4 +1,4 @@
-# Playlist Maker
+# Playlist Maker (Projeto desenvolvido para o curso de Práticas Avançadas em Desenvolvimento Web - 3 Mil Talentos/SENAC-RS)
 
 O **Playlist Maker** é uma aplicação web que permite criar, gerenciar e compartilhar playlists de música. Este projeto é composto por front-end em React e back-end em Node.js com Express, utilizando Sequelize como ORM para banco de dados.
 
