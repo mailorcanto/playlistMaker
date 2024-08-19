@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../autenticacao/autenticacao'; // Importa o contexto de autenticação
 
 function Home() {
-  const { authToken, setAuthToken } = useContext(AuthContext); // Acessa o token de autenticação e a função para atualizá-lo
+  const { authToken } = useContext(AuthContext); // Acessa o token de autenticação e a função para atualizá-lo
 
   return (
     <div className="App">
@@ -21,7 +21,7 @@ function Home() {
         <nav className="links-nav">
           {authToken ? (
             <>
-              {/* Se o usuário estiver autenticado (authToken presente), os links de navegação específicos aparecerão aqui, caso existam */}
+             
             </>
           ) : (
             <>
