@@ -12,7 +12,7 @@ import { AuthContext } from '../autenticacao/autenticacao'; // Importa o context
 const Login = () => {
     const [email, setEmail] = useState(''); 
     const [senha, setSenha] = useState(''); 
-    const { setAuthToken } = useContext(AuthContext);
+    const { setAuthToken, checkToken  } = useContext(AuthContext);
     const navigate = useNavigate(); 
 
     // Função para realizar o login
@@ -20,6 +20,7 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:3001/apiplaylist/login', { email, senha }); // Envia os dados de login para o backend
             setAuthToken(response.data.token); // Armazena o token de autenticação no contexto
+            checkToken(response.data.token); // Executa checagem de token (checkToken em autenticacao) imediatamente após o login
             navigate('/'); // Redireciona o usuário para a página inicial após o login bem-sucedido
         } catch (error) {
             alert('Erro no login: ' + (error.response ? error.response.data : 'Erro desconhecido')); // Exibe mensagem de erro em caso de falha no login
