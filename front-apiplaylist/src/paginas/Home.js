@@ -9,19 +9,23 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../autenticacao/autenticacao'; // Importa o contexto de autenticação
 
 function Home() {
-  const { authToken } = useContext(AuthContext); // Acessa o token de autenticação e a função para atualizá-lo
+  const { authToken, usuarioNome } = useContext(AuthContext); // Acessa o token de autenticação e a função para atualizá-lo
 
   return (
     <div className="App">
       <Header title="Playlist Maker" /> 
 
       <header className="App-center">
+      <p>Bem-vindo {usuarioNome}!</p>
         <img src={logo} className="App-logo" alt="logo" /> 
-        <p>Bem-vindo ao Playlist Maker!</p>
+        
+        <p style={{ margin: 8, fontSize: '26px' }}>Desenvolvido por:</p>
+        <p style={{ margin: 0, fontSize: '24px' }}>Eduardo Q. - Mailor - Marven - Paulo Rafael</p>
+      
+
         <nav className="links-nav">
           {authToken ? (
             <>
-             
             </>
           ) : (
             <>
