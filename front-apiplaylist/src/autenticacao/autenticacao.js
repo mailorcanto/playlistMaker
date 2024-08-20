@@ -1,53 +1,52 @@
-import React, { createContext, useState, useEffect } from 'react'; // Importa React e hooks para criar contexto, gerenciar states e effects
+import React, { createContext, useState, useEffect } from 'react'; // Importa React e hooks para criar contexto, gerenciar estados e efeitos colaterais
 import { jwtDecode } from 'jwt-decode'; // Importa a função jwtDecode para decodificar tokens JWT
 
-// Cria contexto de autenticação
+// Cria o contexto de autenticação
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [authToken, setAuthToken] = useState(''); 
-    const [usuarioId, setUsuarioId] = useState(null); 
+    const [authToken, setAuthToken] = useState(''); // Estado para armazenar o token de autenticação
+    const [usuarioId, setUsuarioId] = useState(null); // Estado para armazenar o ID do usuário
+    const [usuarioNome, setUsuarioNome] = useState(''); // Estado para armazenar o nome do usuário
 
-    // useEffect para verificar se há token de autenticação armazenado no localStorage no carregamento da aplicação
-    useEffect(() => {
-        const checkToken = async () => {
-            const token = localStorage.getItem('@Auth:token'); // Recupera o token do localStorage
-            if (token) {
-                try {
-                    const decodedToken = jwtDecode(token); // Decodifica o token JWT
-                    console.log("Token decodificado:", decodedToken); // Log para verificar o token decodificado no console
-                    setAuthToken(token); // Armazena o token no estado
-                    setUsuarioId(decodedToken.usuarioId); // Armazena o ID do usuário no estado
-                    console.log("ID do usuário definido:", decodedToken.usuarioId); // Log para verificar ID do usuário
-                } catch (error) {
-                    console.error("Erro ao decodificar o token", error); 
-                    localStorage.removeItem('@Auth:token'); // Remove token inválido do localStorage
-                }
+    // Função para verificar o token e decodificar as informações do usuário
+    const checkToken = (token) => {
+        if (token) {
+            try {
+                const { usuarioId, usuarioNome } = jwtDecode(token); // Decodifica o token JWT para obter ID e nome do usuário
+                setAuthToken(token); // Armazena o token de autenticação no estado
+                setUsuarioId(usuarioId); // Armazena o ID do usuário no estado
+                setUsuarioNome(usuarioNome); // Armazena o nome do usuário no estado
+                console.log('Token:', token, 'Usuário ID:', usuarioId, 'Nome:', usuarioNome); // Loga as informações decodificadas no console
+            } catch {
+                localStorage.removeItem('@Auth:token'); // Remove o token inválido do localStorage em caso de erro na decodificação
             }
-        };
-        checkToken(); // Chama a função para verificar token no carregamento da aplicação
-    }, []); // Array vazio [] indica que o efeito será executado apenas uma vez, após o componente ser montado
+        }
+    };
+
+    // useEffect para verificar se há um token armazenado no localStorage quando o componente for montado
+    useEffect(() => {
+        const token = localStorage.getItem('@Auth:token'); // Recupera o token do localStorage
+        checkToken(token); // Chama a função para verificar o token
+    }, []); // Executa o efeito apenas uma vez, após o componente ser montado
 
     // useEffect para armazenar ou remover o token no localStorage sempre que o authToken mudar
     useEffect(() => {
         if (authToken) {
-            console.log("Armazenando token no localStorage:", authToken); // Log para verificar o armazenamento do token
             localStorage.setItem('@Auth:token', authToken); // Armazena o token no localStorage
         } else {
-            console.log("Removendo token do localStorage"); // Log para verificar a remoção do token
-            localStorage.removeItem('@Auth:token'); // Remove o token do localStorage
+            localStorage.removeItem('@Auth:token'); // Remove o token do localStorage se authToken estiver vazio
             setUsuarioId(null); // Reseta o ID do usuário no estado
         }
     }, [authToken]); // O efeito será executado sempre que o authToken mudar
 
     return (
-        // Provedor de contexto que disponibiliza o token de autenticação, a função para defini-lo e o ID do usuário para os componentes filhos
-        <AuthContext.Provider value={{ authToken, setAuthToken, usuarioId }}>
+        // Provedor de contexto que disponibiliza o token de autenticação, a função para defini-lo, a verificação do token, o ID e o nome do usuário para os componentes filhos
+        <AuthContext.Provider value={{ authToken, setAuthToken, checkToken, usuarioId, usuarioNome }}>
             {children} {/* Renderiza os componentes filhos que estão dentro do AuthProvider */}
         </AuthContext.Provider>
     );
 };
-
 
 
 
