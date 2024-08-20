@@ -142,7 +142,7 @@ exports.login = async (req, res) => {
     }
 
     // Gera um token JWT para autenticação do usuário
-    const token = jwt.sign({ usuarioId: usuarioExistente.id }, process.env.JWT_KEY, { expiresIn: '30m' });
+    const token = jwt.sign({ usuarioId: usuarioExistente.id, usuarioNome: usuarioExistente.nome }, process.env.JWT_KEY, { expiresIn: '30m' });
     res.send({ token }); // Retorna o token
   } catch (err) {
     console.log('Erro no login', err);
